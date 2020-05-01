@@ -1,8 +1,9 @@
 import React from 'react';
 import { PixelPreview } from './components/pixel-preview';
 import { PixelPalet } from './components/pixel-palet/pixel-palet';
-// import logo from './logo.svg';
+import Container from './components/container';
 import './App.css';
+// import logo from './logo.svg';
 
 const SIDE_LEN = 15;
 const OFFSET_OUT_PICTURE = 0;
@@ -66,24 +67,46 @@ class App extends React.Component<{}, AppState> {
         <header className="App-header">LED Matrix</header>
 
         <main className="App-main">
-          {
-            this.isNoneEmptyPreviewMatrix &&
-            <PixelPalet
-              matrix={matrixPalet}
-              columns={matrixHorisontal}
-              rows={matrixVertical}
-              padding={padding}
-            ></PixelPalet>
-          }
+          <div className="matrix-panel">
+            {
+              this.isNoneEmptyPreviewMatrix &&
+              <Container>
+                {({ width, height }) => {
 
-          {
-            this.isNoneEmptyPreviewMatrix &&
-            <PixelPreview
-              matrix={matrixPreview}
-              horisontal={matrixHorisontal}
-              padding={padding}
-            />
-          }
+                  return width && height && (
+                    <PixelPalet
+                      matrix={matrixPalet}
+                      columns={matrixHorisontal}
+                      rows={matrixVertical}
+                      padding={padding}
+                      width={width}
+                      height={height}
+                    ></PixelPalet>)
+                }
+                }
+              </Container>
+            }
+          </div>
+
+          <div className="preview-panel">
+            {
+              this.isNoneEmptyPreviewMatrix &&
+              <Container>
+                {({ width, height }) => {
+
+                  return width && height && (
+                    <PixelPreview
+                      matrix={matrixPreview}
+                      horisontal={matrixHorisontal}
+                      padding={padding}
+                      width={width}
+                      height={height}
+                    />)
+                }
+                }
+              </Container>
+            }
+          </div>
         </main>
       </div >
     )

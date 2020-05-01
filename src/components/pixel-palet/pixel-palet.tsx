@@ -8,6 +8,8 @@ type PixelPaletProps = {
     columns: number,
     rows: number,
     padding: number,
+    width: number,
+    height: number,
 }
 
 type PixelPaletState = {
@@ -32,29 +34,23 @@ export class PixelPalet extends React.Component<PixelPaletProps, PixelPaletState
         padding: this.props.padding || 0,
     }
 
-    private containerRef: React.RefObject<HTMLDivElement>;
-
-    constructor(props: PixelPaletProps) {
-        super(props);
-        this.containerRef = React.createRef<HTMLDivElement>();
-    }
-
     componentDidMount = () => {
-        window.addEventListener('resize', this.handleResize.bind(this));
         this.recalcCanvasDimentions();
     }
-
-    handleResize = (event: Event) => {
-        this.recalcCanvasDimentions();
+    
+    componentDidUpdate(prevProps: PixelPaletProps, prevState: PixelPaletState) {
+        if (
+            this.props.width !== prevProps.width ||
+            this.props.height !== prevProps.height
+        ) {
+            this.recalcCanvasDimentions();
+        }
     }
 
     recalcCanvasDimentions() {
-        const container = this.containerRef.current;
-        if (!container) return;
-        const { width, height } = container.getBoundingClientRect();
-
         const gridGap = 2;
-        const matrixSideLength = this.props.columns;
+        const { width, height, columns: matrixSideLength } = this.props;
+
         let maxSize = Math.floor(
             (width > height ? height : width) - this.state.padding
         );
@@ -86,22 +82,13 @@ export class PixelPalet extends React.Component<PixelPaletProps, PixelPaletState
         const cells = this.createPalet(matrix)
         const cellDimentions = { width, height };
 
-        return (
-            <div className="matrix-panel">
-                <div
-                    className="container"
-                    ref={this.containerRef}
-                >
-                    <Grid
-                        cells={cells}
-                        columns={columns}
-                        rows={rows}
-                        cell={cellDimentions}
-                        gridGap={gridGap}
-                    />
-                </div>
-            </div>
-        )
+        return (<Grid
+            cells={cells}
+            columns={columns}
+            rows={rows}
+            cell={cellDimentions}
+            gridGap={gridGap}
+        />);
     }
 
     generateMatrix(columns: number, rows: number): Cell[][] {

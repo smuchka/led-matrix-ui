@@ -1,11 +1,14 @@
 import React from 'react';
-import { DataPixels } from '../../modules';
+import Canvas from './Canvas';
+import { DataPixels } from '../../modules'
 
 type PixelPreviewProps = {
     matrix: string[][] | null,
     horisontal: number,
     // vertical: number,
     padding?: number
+    width: number,
+    height: number,
 }
 
 type PixelPreviewState = {
@@ -17,9 +20,6 @@ type PixelPreviewState = {
 
 export class PixelPreview extends React.Component<PixelPreviewProps, PixelPreviewState> {
 
-    private canvasRef: React.RefObject<HTMLCanvasElement>;
-    private containerRef: React.RefObject<HTMLDivElement>;
-
     state = {
         pixelSize: 0,
         canvasWidth: 0,
@@ -27,19 +27,17 @@ export class PixelPreview extends React.Component<PixelPreviewProps, PixelPrevie
         padding: this.props.padding || 0,
     }
 
-    constructor(props: PixelPreviewProps) {
-        super(props);
-        this.canvasRef = React.createRef<HTMLCanvasElement>();
-        this.containerRef = React.createRef<HTMLDivElement>();
-    }
-
     componentDidMount = () => {
-        window.addEventListener('resize', this.handleResize.bind(this));
         this.recalcCanvasDimentions();
     }
 
     componentDidUpdate(prevProps: PixelPreviewProps, prevState: PixelPreviewState) {
-        this.clearAndDrawCanvasContext(true);
+        if (
+            this.props.width !== prevProps.width ||
+            this.props.height !== prevProps.height
+        ) {
+            this.recalcCanvasDimentions();
+        }
     }
 
     handleResize = (event: Event) => {
@@ -47,11 +45,8 @@ export class PixelPreview extends React.Component<PixelPreviewProps, PixelPrevie
     }
 
     recalcCanvasDimentions() {
-        const container = this.containerRef.current;
-        if (!container) return;
+        const { width, height, horisontal: matrixSideLength } = this.props;
 
-        const matrixSideLength = this.props.horisontal;
-        const { width, height } = container.getBoundingClientRect();
         let maxSize = Math.floor(
             (width > height ? height : width) - this.state.padding
         );
@@ -77,40 +72,16 @@ export class PixelPreview extends React.Component<PixelPreviewProps, PixelPrevie
         const { canvasWidth, canvasHeight } = this.state;
 
         return (
-            <div className="preview-panel">
-                <div className="container" ref={this.containerRef}>
-                    {
-                        <canvas
-                            width={canvasWidth}
-                            height={canvasHeight}
-                            ref={this.canvasRef}
-                        />
-                    }
-                </div>
-            </div>
+            <Canvas
+                width={canvasWidth}
+                height={canvasHeight}
+                canvas={this.createPixelDattaCanvas()}
+                withBackground={true}
+            />
         );
     }
 
-    private clearAndDrawCanvasContext(withBackground: boolean = false) {
-        const canvas = this.canvasRef.current;
-        if (canvas) {
-            const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-
-            ctx.clearRect(0, 0, canvas?.clientWidth, canvas?.clientHeight)
-
-            if (withBackground) {
-                ctx.fillStyle = 'rgba(222, 222, 222, 0.04)';
-                ctx.fillRect(0, 0, canvas?.clientWidth, canvas?.clientHeight);
-            }
-
-            const imageCanvas = this.getCanvasLayer();
-            if (imageCanvas) {
-                ctx.drawImage(imageCanvas, 0, 0);
-            }
-        }
-    }
-
-    private getCanvasLayer(): HTMLCanvasElement | null {
+    private createPixelDattaCanvas(): HTMLCanvasElement | null {
         const { matrix } = this.props;
         const { pixelSize } = this.state;
 
