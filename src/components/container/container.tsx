@@ -1,5 +1,6 @@
 
 import React from 'react'
+import './container.css'
 
 type ContainerProps = {
     children: (api: API) => React.ReactNode

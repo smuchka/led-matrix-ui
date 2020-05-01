@@ -1,7 +1,7 @@
 import React from 'react';
-import { PixelPreview } from './components/pixel-preview';
-import { PixelPalet } from './components/pixel-palet/pixel-palet';
-import Container from './components/container';
+import { PixelPreview } from './components/pixel-preview/PixelPreview';
+import { PixelPalet } from './components/pixel-palet/PixelPalet';
+import Container from './components/container/container';
 import './App.css';
 // import logo from './logo.svg';
 

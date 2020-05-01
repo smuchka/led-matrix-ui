@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import GridCell, { Cell } from './grid-cell';
+import GridCell, { Cell } from './GridCell';
+import classes from './Grid.module.css';
 
 export type GridProps = {
     cells: Cell[][],
@@ -42,7 +43,7 @@ export default class Grid extends React.Component<GridProps> {
 
         return (
             <div
-                className="grid"
+                className={classes.grid}
                 style={styles}
             >
                 {

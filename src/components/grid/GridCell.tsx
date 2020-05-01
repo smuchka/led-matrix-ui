@@ -1,4 +1,5 @@
 import React from 'react'
+import classes from './Grid.module.css';
 
 export interface Cell {
     index: number,
@@ -32,10 +33,10 @@ export default function GridCell(props: GridCellProps) {
     }
 
     const classList = () => {
-        const classList = ['cell'];
+        const classList = [classes.cell];
 
         if (!!color) {
-            classList.push('filled')
+            classList.push(classes.filled)
         }
 
         return classList.join(' ')

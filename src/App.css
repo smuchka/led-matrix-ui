@@ -37,15 +37,6 @@
   width: 30%;
 }
 
-.container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 40px;
-}
-
 /*
  * Pixel palet
  */
@@ -53,31 +44,6 @@
   flex-grow: 1;
   align-items: center;
   justify-content: center;
-}
-
-.grid {
-  display: grid;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-
-.grid .cell {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: 1px solid var(--grid-pixel-color);
-  border-radius: 90px;
-  color: white;
-  cursor: pointer;
-  min-width: 10px;
-  min-height: 10px;
-}
-
-.cell.filled {
-  background-color: var(--grid-pixel-color);
-  border: none;
 }
 
 /*

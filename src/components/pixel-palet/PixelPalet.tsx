@@ -1,6 +1,6 @@
 import React from 'react'
-import Grid from './grid';
-import { Cell } from "./grid-cell"
+import Grid from '../grid/Grid';
+import { Cell } from "../grid/GridCell"
 import { Pixel } from "../../App"
 
 type PixelPaletProps = {
@@ -37,7 +37,7 @@ export class PixelPalet extends React.Component<PixelPaletProps, PixelPaletState
     componentDidMount = () => {
         this.recalcCanvasDimentions();
     }
-    
+
     componentDidUpdate(prevProps: PixelPaletProps, prevState: PixelPaletState) {
         if (
             this.props.width !== prevProps.width ||

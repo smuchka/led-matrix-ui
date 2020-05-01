@@ -1,0 +1,24 @@
+.grid {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border: 1px solid var(--grid-pixel-color);
+    border-radius: 90px;
+    color: white;
+    cursor: pointer;
+    min-width: 10px;
+    min-height: 10px;
+}
+
+.cell.filled {
+    background-color: var(--grid-pixel-color);
+    border: none;
+}
