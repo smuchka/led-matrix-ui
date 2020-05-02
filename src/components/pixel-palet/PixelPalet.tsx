@@ -1,7 +1,7 @@
 import React from 'react'
 import Grid from '../grid/Grid';
 import { Cell } from "../grid/GridCell"
-import { Pixel } from "../../App"
+import { Pixel } from "../../helpers"
 
 type PixelPaletProps = {
     matrix: Pixel[][],
