@@ -71,6 +71,7 @@ export class PixelPreview extends React.Component<PixelPreviewProps, PixelPrevie
     render() {
         const { canvasWidth, canvasHeight } = this.state;
 
+        // console.log(this.createPixelDattaCanvas()?.toDataURL())
         return (
             <Canvas
                 width={canvasWidth}
@@ -81,7 +82,7 @@ export class PixelPreview extends React.Component<PixelPreviewProps, PixelPrevie
         );
     }
 
-    private createPixelDattaCanvas(): HTMLCanvasElement | null {
+    private createPixelData(): DataPixels | null {
         const { matrix } = this.props;
         const { pixelSize } = this.state;
 
@@ -89,6 +90,12 @@ export class PixelPreview extends React.Component<PixelPreviewProps, PixelPrevie
             return null;
         }
 
-        return new DataPixels(matrix, pixelSize).canvas;
+        return new DataPixels(matrix, pixelSize)
+    }
+
+    private createPixelDattaCanvas(): HTMLCanvasElement | null {
+        const data = this.createPixelData();
+
+        return data ? data.canvas : null;
     }
 }

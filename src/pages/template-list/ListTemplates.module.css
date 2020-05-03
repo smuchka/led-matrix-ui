@@ -1,0 +1,23 @@
+:root {
+    --grid-item-padding: 10px;
+    --grid-item-preview-width: 130px;
+    --grid-item-width: calc(var(--grid-item-preview-width) + var(--grid-item-padding) * 2);
+}
+
+@media screen and (min-width: 900px) {
+    :root {
+        --grid-item-preview-width: 160px;
+    }
+}
+
+.grid {
+    display: grid;
+    /* grid-template-columns: repeat(4, minmax(var(--item-width), 1fr)); */
+    /* grid-template-columns: repeat(auto-fit, minmax(var(--item-width), 1fr)); */
+    grid-template-columns: repeat(auto-fill, minmax(var(--grid-item-width), 1fr));
+    gap: 15px;
+    width: 80%;
+    height: 100%;
+    margin: 20px;
+    overflow: hidden;
+}
