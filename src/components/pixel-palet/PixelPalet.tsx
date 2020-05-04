@@ -47,6 +47,22 @@ export class PixelPalet extends React.Component<PixelPaletProps, PixelPaletState
         }
     }
 
+    render() {
+        const { cell: { width, height }, gridGap, } = this.state;
+        const { matrix, columns, rows, } = this.props;
+
+        const cells = this.createPalet(matrix)
+        const cellDimentions = { width, height };
+
+        return (<Grid
+            cells={cells}
+            columns={columns}
+            rows={rows}
+            cell={cellDimentions}
+            gridGap={gridGap}
+        />);
+    }
+
     recalcCanvasDimentions() {
         const gridGap = 2;
         const { width, height, columns: matrixSideLength } = this.props;
@@ -73,22 +89,6 @@ export class PixelPalet extends React.Component<PixelPaletProps, PixelPaletState
                 height: pixelSize,
             }
         })
-    }
-
-    render() {
-        const { cell: { width, height }, gridGap, } = this.state;
-        const { matrix, columns, rows, } = this.props;
-
-        const cells = this.createPalet(matrix)
-        const cellDimentions = { width, height };
-
-        return (<Grid
-            cells={cells}
-            columns={columns}
-            rows={rows}
-            cell={cellDimentions}
-            gridGap={gridGap}
-        />);
     }
 
     generateMatrix(columns: number, rows: number): Cell[][] {

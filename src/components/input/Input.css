@@ -1,0 +1,51 @@
+:root {
+    --validation-color: rgba(255, 87, 34, 0.7411764705882353);
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-container input {
+    padding: 0;
+    margin: 0;
+    border: 2px solid transparent;
+    outline: 0;
+    border-radius: 3px;
+    transition: all .3s ease-in-out;
+    font-size: 24px;
+    line-height: 2;
+    text-indent: px;
+    width: 50px;
+    text-align: center;
+    color: var(--color-main-gray);
+    font-weight: 700;
+}
+
+.input-container input::placeholder {
+    color: var(--color-main-gray);
+}
+
+.input-container label {
+    margin: 0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+    text-transform: lowercase;
+    font-size: 32px;
+    top: -100px;
+}
+
+.input-container.validation-error label {
+    color: var(--validation-color);
+}
+
+.input-container.validation-error input {
+    border: 2px solid var(--validation-color);
+}

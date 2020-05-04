@@ -1,13 +1,13 @@
 :root {
-    --main-bg-color: #353a44;
-    --header-bg-color: #282c34;
+    --color-main-gray: #353a44;
+    --color-dark-gray: #282c34;
     --header-height: 2em;
     --grid-pixel-color: rgb(106, 125, 141);
 }
 
 .Layout {
     text-align: center;
-    background-color: var(--main-bg-color);
+    background-color: var(--color-main-gray);
     font-size: calc(10px + 2vmin);
     color: white;
 }
@@ -18,7 +18,7 @@
     align-items: center;
     justify-content: center;
     height: var(--header-height);
-    background-color: var(--header-bg-color);
+    background-color: var(--color-dark-gray);
 }
 
 .main {

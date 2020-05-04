@@ -17,7 +17,7 @@ export default function NewTemplate(props: NewTemplateProps) {
             clickHandler={props.clickHandler}
         >
             <PlusIcon width={'40%'} style={{
-                color: 'var(--main-bg-color)'
+                color: 'var(--color-main-gray)'
 
             }} />
         </Template>

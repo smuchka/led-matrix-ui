@@ -29,14 +29,14 @@ export default class ListTemplates extends Component<ListTemplatesProps, ListTem
         }
         return (
             <div className={classes.grid}>
-                <Link to={`/template/new`} style={resetLinkStyle}                >
+                <Link to={`/new`} style={resetLinkStyle}                >
                     <NewTemplate />
                 </Link>
                 {
                     this.state.templates &&
                     this.state.templates.map((tmp: TemplateItem) => (
                         <Link
-                            to={`/template/${tmp.id}`}
+                            to={`/matrix/${tmp.id}`}
                             key={tmp.id}
                             style={resetLinkStyle}
                         >

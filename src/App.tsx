@@ -18,8 +18,9 @@ class App extends React.Component {
       <Layout>
         <Switch>
           {/* <Route path='/' exact component={Home} /> */}
-          <Route path='/template/new' component={CreateNewDimentions} />
-          <Route path='/template/:tmpName' component={EditorPage} />
+          <Route path='/new' component={CreateNewDimentions} />
+          <Route path='/matrix/c' component={EditorPage} />
+          <Route path='/matrix/:tmpName' component={EditorPage} />
           <Route path='/select-template' exact component={ListTemplates} />
           <Redirect to="/select-template" />
         </Switch>

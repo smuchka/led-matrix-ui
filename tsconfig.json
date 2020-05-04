@@ -20,6 +20,10 @@
     "jsx": "react"
   },
   "include": [
-    "src"
+    "src",
+  ],
+  "typeRoots": [
+    "@types",
+    "node_modules/@types"
   ]
 }
