@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { TemplateItem, TemplateAPI } from '../../helpers';
-import classes from './ListTemplates.module.css';
+import React, { useEffect, useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { TemplateAPI, TemplateItem } from '../../helpers';
+import { Keys, useKeypressListener } from '../../hooks/keypress';
 import ExistTemplate from './item/ExistTemplate';
 import NewTemplate from './item/NewTemplate';
-import { Link } from 'react-router-dom'
+import classes from './ListTemplates.module.css';
 
 type ListTemplatesProps = {};
 
 export const ListTemplates = () => {
 
+    const [navToNewMatrix, setNavToNewMatrix] = useState(false);
     const [templates, setTemplates] = useState<TemplateItem[]>([]);
 
     useEffect(() => {
@@ -16,17 +18,24 @@ export const ListTemplates = () => {
         setTemplates(templates)
     }, [])
 
+    useKeypressListener(Keys.LETTER_N, () => setNavToNewMatrix(true));
 
     const resetLinkStyle = {
         textDecoration: 'none',
         color: 'inherit'
     }
 
+    if (navToNewMatrix) {
+        return <Redirect to="/new" />
+    }
+
     return (
         <div className={classes.grid}>
-            <Link to={`/new`} style={resetLinkStyle}                >
+
+            <Link to={`/new`} style={resetLinkStyle}>
                 <NewTemplate />
             </Link>
+
             {
                 templates &&
                 templates.map((tmp: TemplateItem) => (
