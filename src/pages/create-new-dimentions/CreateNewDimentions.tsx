@@ -191,7 +191,7 @@ export class CreateNewDimentions extends Component<CreateNewDimentionsProps, Cre
 
     render() {
         if (this.state.navigateUp) {
-            return <Redirect to="/" />
+            return <Redirect to="/select-template" />
         }
 
         if (this.state.navigateNext) {

@@ -1,28 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
 import classes from './Layout.module.css';
-import { Link } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
-class Layout extends Component {
-    render() {
-        const resetLinkStyle = {
-            textDecoration: 'none',
-            color: 'inherit'
-        };
+// React.FC<RouteComponentProps<>> ???
+function Layout(props: any) {
+    const title = 'LED Matrix';
+    const headerRoute = '/select-template';
+    const isOnSelectTemplate = headerRoute === props.location.pathname;
+    const resetLinkStyle = {
+        textDecoration: 'none',
+        color: 'inherit'
+    };
 
-        return (
-            <div className={classes.Layout}>
-                <header className={classes.header}>
-                    <Link
-                        to="/"
-                        style={resetLinkStyle}
-                    >LED Matrix</Link>
-                </header>
+    return (
+        <div className={classes.Layout}>
+            <header className={classes.header}>
+                {
+                    !isOnSelectTemplate ?
+                        <NavLink
+                            to={headerRoute}
+                            style={resetLinkStyle}
+                            title={title}
+                        >{title}</NavLink>
+                        : <span>{title}</span>
+                }
+            </header>
 
-                <main className={classes.main}>
-                    {this.props.children}
-                </main>
-            </div >)
-    }
+            <main className={classes.main}>
+                {props.children}
+            </main>
+        </div >
+    )
 }
 
-export default Layout;
+const LayoutWithRouter = withRouter(props => <Layout {...props} />);
+export default LayoutWithRouter;
