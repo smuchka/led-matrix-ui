@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TemplateItem, TemplateAPI } from '../../helpers';
 import classes from './ListTemplates.module.css';
 import ExistTemplate from './item/ExistTemplate';
@@ -7,44 +7,38 @@ import { Link } from 'react-router-dom'
 
 type ListTemplatesProps = {};
 
-type ListTemplatesState = {
-    templates: TemplateItem[],
-};
+export const ListTemplates = () => {
 
-export default class ListTemplates extends Component<ListTemplatesProps, ListTemplatesState> {
+    const [templates, setTemplates] = useState<TemplateItem[]>([]);
 
-    state = {
-        templates: []
-    }
-
-    componentDidMount() {
+    useEffect(() => {
         const templates = TemplateAPI.all();
-        this.setState({ templates })
+        setTemplates(templates)
+    }, [])
+
+
+    const resetLinkStyle = {
+        textDecoration: 'none',
+        color: 'inherit'
     }
 
-    render() {
-        const resetLinkStyle = {
-            textDecoration: 'none',
-            color: 'inherit'
-        }
-        return (
-            <div className={classes.grid}>
-                <Link to={`/new`} style={resetLinkStyle}                >
-                    <NewTemplate />
-                </Link>
-                {
-                    this.state.templates &&
-                    this.state.templates.map((tmp: TemplateItem) => (
-                        <Link
-                            to={`/matrix/${tmp.id}`}
-                            key={tmp.id}
-                            style={resetLinkStyle}
-                        >
-                            <ExistTemplate item={tmp} />
-                        </Link>
-                    ))
-                }
-            </div>
-        )
-    }
+    return (
+        <div className={classes.grid}>
+            <Link to={`/new`} style={resetLinkStyle}                >
+                <NewTemplate />
+            </Link>
+            {
+                templates &&
+                templates.map((tmp: TemplateItem) => (
+                    <Link
+                        to={`/matrix/${tmp.id}`}
+                        key={tmp.id}
+                        style={resetLinkStyle}
+                    >
+                        <ExistTemplate item={tmp} />
+                    </Link>
+                ))
+            }
+        </div>
+    )
 }

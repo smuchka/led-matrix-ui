@@ -1,12 +1,12 @@
 import React from 'react';
-// import logo from './logo.svg';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Layout from './hoc/Layout/Layout';
-import EditorPage from './pages/editor-page/EditorPage';
-// import Home from './pages/home/Home';
-import CreateNewDimentions from './pages/create-new-dimentions/CreateNewDimentions';
-import ListTemplates from './pages/template-list/ListTemplates';
+import { CreateNewDimentions } from './pages/create-new-dimentions/CreateNewDimentions';
+import { EditorPage } from './pages/editor-page/EditorPage';
+import Home from './pages/home/Home';
+import { ListTemplates } from './pages/template-list/ListTemplates';
+// import logo from './logo.svg';
 
 class App extends React.Component {
 
@@ -17,11 +17,12 @@ class App extends React.Component {
     return (
       <Layout>
         <Switch>
-          {/* <Route path='/' exact component={Home} /> */}
+          <Route path='/welcome' exact component={Home} />
           <Route path='/new' component={CreateNewDimentions} />
           <Route path='/matrix/c' component={EditorPage} />
           <Route path='/matrix/:tmpName' component={EditorPage} />
           <Route path='/select-template' exact component={ListTemplates} />
+
           <Redirect to="/select-template" />
         </Switch>
       </Layout>

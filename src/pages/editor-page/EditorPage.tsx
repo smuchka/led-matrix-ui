@@ -1,107 +1,80 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '../../components/container/container';
-import { PixelPreview } from '../../components/pixel-preview/PixelPreview';
 import { PixelPalet } from '../../components/pixel-palet/PixelPalet';
-import { Pixel, ColorMatrix } from '../../helpers'
+import { PixelPreview } from '../../components/pixel-preview/PixelPreview';
+import { ColorMatrix, Pixel } from '../../helpers';
 import './EditorPage.css';
 
 const SIDE_LEN = 15;
 const OFFSET_OUT_PICTURE = 80;
 
-type EditorPageState = {
-  matrixPalet: (Pixel | null)[][],
-  matrixPreview: Pixel[][],
-  matrixHorisontal: number,
-  matrixVertical: number,
-  padding: number,
-}
+export const EditorPage: React.FC<any> = () => {
 
-class EditorPage extends React.Component<any, EditorPageState> {
+  const [editorMatrix, setEditorMatrix] = useState<(Pixel | null)[][]>([[]]);
+  const [previewMatrix, setPreviewMatrix] = useState<Pixel[][]>([[]]);
+  const [matrixDimentios, setMatrixDimentios] = useState<[number, number]>([SIDE_LEN, SIDE_LEN])
+  const padding = OFFSET_OUT_PICTURE;
 
-  state = {
-    padding: OFFSET_OUT_PICTURE,
-    matrixHorisontal: SIDE_LEN,
-    matrixVertical: SIDE_LEN,
-    matrixPreview: [[]],
-    matrixPalet: [[]],
-  }
-
-  get isNoneEmptyPreviewMatrix() {
-    if ((this.state.matrixPreview && this.state.matrixPreview.length)) {
-      return (this.state.matrixPreview[0] && this.state.matrixPreview[0].length)
+  const isNoneEmptyPreviewMatrix = () => {
+    if ((previewMatrix && previewMatrix.length)) {
+      return (previewMatrix[0] && previewMatrix[0].length)
     }
 
     return false;
   }
 
-  componentDidMount = () => {
-    this.load();
-  }
-
-  load = () => {
+  useEffect(() => {
     const palletData = ColorMatrix.getTemplates().marioBrother(true);
     const preview = ColorMatrix.colorEmptyPixels(palletData)
 
-    this.setState({
-      matrixPalet: palletData,
-      matrixPreview: preview,
-      matrixHorisontal: SIDE_LEN,
-      matrixVertical: SIDE_LEN,
-    })
+    setEditorMatrix(palletData)
+    setPreviewMatrix(preview)
+    setMatrixDimentios([SIDE_LEN, SIDE_LEN])
+  }, [])
+
+  const [columns, rows] = matrixDimentios;
+
+  if (!isNoneEmptyPreviewMatrix()) {
+    return null;
   }
 
-  render() {
+  return (
+    <React.Fragment>
+      <div className="matrix-panel">
+        <Container>
+          {({ width, height }) => {
 
-    const {
-      matrixPalet,
-      matrixPreview,
-      matrixHorisontal,
-      matrixVertical,
-      padding,
-    } = this.state;
+            return width && height && (
+              <PixelPalet
+                matrix={editorMatrix as string[][]}
+                columns={columns}
+                rows={rows}
+                padding={padding}
+                width={width}
+                height={height}
+              ></PixelPalet>)
+          }
+          }
+        </Container>
+      </div>
 
-    return (
-      this.isNoneEmptyPreviewMatrix &&
-      <React.Fragment>
-        <div className="matrix-panel">
-          <Container>
-            {({ width, height }) => {
+      <div className="preview-panel">
+        <Container>
+          {({ width, height }) => {
 
-              return width && height && (
-                <PixelPalet
-                  matrix={matrixPalet}
-                  columns={matrixHorisontal}
-                  rows={matrixVertical}
-                  padding={padding}
-                  width={width}
-                  height={height}
-                ></PixelPalet>)
-            }
-            }
-          </Container>
-        </div>
-
-        <div className="preview-panel">
-          <Container>
-            {({ width, height }) => {
-
-              return width && height && (
-                <PixelPreview
-                  matrix={matrixPreview}
-                  horisontal={matrixHorisontal}
-                  padding={padding}
-                  width={width}
-                  height={height}
-                />)
-            }
-            }
-          </Container>
-        </div>
-      </React.Fragment>
-    )
-  }
-
+            return width && height && (
+              <PixelPreview
+                matrix={previewMatrix}
+                horisontal={columns}
+                padding={padding}
+                width={width}
+                height={height}
+              />)
+          }
+          }
+        </Container>
+      </div>
+    </React.Fragment>
+  )
 }
-
-export default EditorPage;
 

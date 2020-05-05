@@ -34,7 +34,7 @@ enum ControlEnum {
 
 var ENTER_KEY = 13;
 var ESCAPE_KEY = 27;
-export default class CreateNewDimentions extends Component<CreateNewDimentionsProps, CreateNewDimentionsState> {
+export class CreateNewDimentions extends Component<CreateNewDimentionsProps, CreateNewDimentionsState> {
 
     private firstFromInput: React.RefObject<HTMLInputElement>;
 
