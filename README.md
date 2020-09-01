@@ -1,5 +1,6 @@
 * test PR and projects issues
 * git graph pull request manage
+* finded call action for creating PR
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
