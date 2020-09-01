@@ -1,0 +1,1 @@
+export const PARAM_EDITOR_TEMPLATE = 'tmpName';

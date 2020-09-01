@@ -4,11 +4,13 @@ import { PixelPalet } from '../../components/pixel-palet/PixelPalet';
 import { PixelPreview } from '../../components/pixel-preview/PixelPreview';
 import { ColorMatrix, Pixel } from '../../helpers';
 import './EditorPage.css';
+import { RouteComponentProps } from 'react-router-dom';
+import { PARAM_EDITOR_TEMPLATE } from '../../helpers/constants';
 
 const SIDE_LEN = 15;
 const OFFSET_OUT_PICTURE = 80;
 
-export const EditorPage: React.FC<any> = () => {
+export const EditorPage: React.FC<RouteComponentProps<any>> = (props) => {
 
   const [editorMatrix, setEditorMatrix] = useState<(Pixel | null)[][]>([[]]);
   const [previewMatrix, setPreviewMatrix] = useState<Pixel[][]>([[]]);
@@ -24,13 +26,24 @@ export const EditorPage: React.FC<any> = () => {
   }
 
   useEffect(() => {
-    const palletData = ColorMatrix.getTemplates().marioBrother(true);
-    const preview = ColorMatrix.colorEmptyPixels(palletData)
 
-    setEditorMatrix(palletData)
-    setPreviewMatrix(preview)
+    let palletData = null;
+    const templateName = props.match.params[PARAM_EDITOR_TEMPLATE] || '';
+
+    if (templateName === 'mario') {
+      palletData = ColorMatrix.getTemplates().marioBrother(true);
+    } else if (templateName === 'mario-green') {
+      palletData = ColorMatrix.getTemplates().marioBrother(false);
+    }
+
+    if (palletData) {
+      const preview = ColorMatrix.colorEmptyPixels(palletData)
+
+      setEditorMatrix(palletData)
+      setPreviewMatrix(preview)
+    }
     setMatrixDimentios([SIDE_LEN, SIDE_LEN])
-  }, [])
+  }, [props])
 
   const [columns, rows] = matrixDimentios;
 
@@ -39,7 +52,7 @@ export const EditorPage: React.FC<any> = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="matrix-panel">
         <Container>
           {({ width, height }) => {
@@ -74,7 +87,7 @@ export const EditorPage: React.FC<any> = () => {
           }
         </Container>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

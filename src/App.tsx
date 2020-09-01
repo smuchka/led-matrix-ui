@@ -7,6 +7,7 @@ import { EditorPage } from './pages/editor-page/EditorPage';
 import Home from './pages/home/Home';
 import { ListTemplates } from './pages/template-list/ListTemplates';
 // import logo from './logo.svg';
+import { PARAM_EDITOR_TEMPLATE } from './helpers/constants';
 
 class App extends React.Component {
 
@@ -20,7 +21,7 @@ class App extends React.Component {
           <Route path='/welcome' exact component={Home} />
           <Route path='/new' component={CreateNewDimentions} />
           <Route path='/matrix/c' component={EditorPage} />
-          <Route path='/matrix/:tmpName' component={EditorPage} />
+          <Route path={`/matrix/:${PARAM_EDITOR_TEMPLATE}`} component={EditorPage} />
           <Route path='/select-template' exact component={ListTemplates} />
 
           <Redirect to="/select-template" />
